@@ -30,6 +30,8 @@ export default gql`
     email: String
     createdAt: DateTime
     updatedAt: DateTime
+    periodStart: DateTime
+    periodEnd: DateTime
     team: Team
   }
 

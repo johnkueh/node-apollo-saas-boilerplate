@@ -3,11 +3,13 @@ import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 import jwt from 'express-jwt';
 import bodyParser from 'body-parser';
+import moment from 'moment';
 import schema from './schema';
 import resolvers from './resolvers';
 import RequireAuthDirective from './directives/requireAuthDirective';
 import ComputedDirective from './directives/computedDirective';
 import models, { sequelize } from './db/models';
+import { handleWebhook } from './services/stripe';
 
 const app = express();
 
@@ -52,11 +54,17 @@ server.applyMiddleware({ app });
 
 app.use(bodyParser.raw({ type: '*/*' }));
 app.post('/webhooks/stripe', (req, res, next) => {
-  const eventJson = JSON.parse(req.body);
-
-  console.log('stripe webhook');
-  console.log(eventJson);
-  res.sendStatus(200);
+  handleWebhook({
+    req,
+    res,
+    handleSubscriptionUpdated: async ({ customerId, periodStart, periodEnd }) => {
+      const user = await models.user.findOne({ where: { stripeCustomerId: customerId } });
+      user.update({
+        periodStart: moment.unix(periodStart).toDate(),
+        periodEnd: moment.unix(periodEnd).toDate()
+      });
+    }
+  });
   next();
 });
 

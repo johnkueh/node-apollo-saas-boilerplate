@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     resetPasswordToken: DataTypes.STRING,
     stripeCustomerId: DataTypes.STRING,
     createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    updatedAt: DataTypes.DATE,
+    periodStart: DataTypes.DATE,
+    periodEnd: DataTypes.DATE
   });
   User.associate = function(models) {
     User.belongsTo(models.team);

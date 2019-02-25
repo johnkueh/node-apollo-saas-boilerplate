@@ -16,7 +16,6 @@ export const createCard = async ({ token, customerId }) => {
 export const createSubscription = async ({ customerId, planId }) => {
   // Get test planId from https://dashboard.stripe.com/test/subscriptions/products
   // Eg: plan_EaVtYitQ31qTPk
-
   return stripe.subscriptions.create({
     customer: customerId,
     items: [
@@ -32,4 +31,37 @@ export const listAllInvoices = async ({ customerId }) => {
     customer: customerId
   });
   return res.data;
+};
+
+export const handleWebhook = ({ req, res, handleSubscriptionUpdated }) => {
+  const json = JSON.parse(req.body);
+  const {
+    customer: customerId,
+    current_period_end: periodEnd,
+    current_period_start: periodStart
+  } = json.data.object;
+
+  const period = {
+    customerId,
+    periodStart,
+    periodEnd
+  };
+
+  console.log('webhook type - ', json.type);
+
+  switch (json.type) {
+    case 'customer.subscription.deleted':
+      handleSubscriptionUpdated(period);
+      break;
+    case 'customer.subscription.created':
+      handleSubscriptionUpdated(period);
+      break;
+    case 'customer.subscription.updated':
+      handleSubscriptionUpdated(period);
+      break;
+    default:
+    // console.log(json.data.object);
+  }
+
+  res.sendStatus(200);
 };
