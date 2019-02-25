@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 import jwt from 'express-jwt';
-
+import bodyParser from 'body-parser';
 import schema from './schema';
 import resolvers from './resolvers';
 import RequireAuthDirective from './directives/requireAuthDirective';
@@ -49,6 +49,16 @@ const server = new ApolloServer({
 });
 
 server.applyMiddleware({ app });
+
+app.use(bodyParser.raw({ type: '*/*' }));
+app.post('/webhooks/stripe', (req, res, next) => {
+  const eventJson = JSON.parse(req.body);
+
+  console.log('stripe webhook');
+  console.log(eventJson);
+  res.sendStatus(200);
+  next();
+});
 
 app.listen({ port: 8000 }, () => {
   console.log('Apollo Server on http://localhost:8000/graphql');
