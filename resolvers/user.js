@@ -7,6 +7,7 @@ import {
   createSubscription,
   listAllInvoices
 } from '../services/stripe';
+import { identify } from '../services/segment';
 import dbModels from '../db/models';
 import { toCamelCase } from '../helpers/arrayUtils';
 
@@ -28,13 +29,17 @@ export default {
     async signup(parent, { firstName, lastName, email, password }, { models }, info) {
       const stripeCustomerId = await createCustomer({ email });
 
-      const user = models.user.create({
+      const user = await models.user.create({
         firstName,
         lastName,
         email,
         stripeCustomerId,
         password: await hashedPassword(password)
       });
+
+      if (process.env.SEGMENT_WRITE_KEY) {
+        identify(user);
+      }
 
       return getJwt({
         id: user.id,
