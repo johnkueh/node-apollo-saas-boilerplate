@@ -53,7 +53,7 @@ const server = new ApolloServer({
 server.applyMiddleware({ app });
 
 app.use(bodyParser.raw({ type: '*/*' }));
-app.post('/webhooks/stripe', (req, res, next) => {
+app.post(process.env.STRIPE_WEBHOOKS_PATH, (req, res, next) => {
   handleWebhook({
     req,
     res,
