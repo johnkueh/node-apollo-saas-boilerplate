@@ -7,7 +7,6 @@ import {
   createSubscription,
   listAllInvoices
 } from '../services/stripe';
-import { identify } from '../services/segment';
 import dbModels from '../db/models';
 import { toCamelCase } from '../helpers/arrayUtils';
 
@@ -37,23 +36,25 @@ export default {
         password: await hashedPassword(password)
       });
 
-      if (process.env.SEGMENT_WRITE_KEY) {
-        identify(user);
-      }
-
-      return getJwt({
-        id: user.id,
-        email: user.email
-      });
+      return {
+        user,
+        jwt: getJwt({
+          id: user.id,
+          email: user.email
+        })
+      };
     },
     async login(parent, { email, password }, { models }, info) {
       const user = await models.user.findOne({ where: { email } });
 
       if (user && (await bcrypt.compare(password, user.password))) {
-        return getJwt({
-          id: user.id,
-          email: user.email
-        });
+        return {
+          user,
+          jwt: getJwt({
+            id: user.id,
+            email: user.email
+          })
+        };
       }
 
       throw new Error('Please check your credentials and try again.');
