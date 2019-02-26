@@ -1,5 +1,3 @@
-import { analytics } from '../services/segment';
-
 export default {
   Mutation: {
     async createTeam(parent, { name }, { user, models }, info) {
@@ -7,16 +5,6 @@ export default {
         name
       });
       await user.update({ teamId: team.id });
-
-      if (process.env.SEGMENT_WRITE_KEY) {
-        analytics.group({
-          userId: user.id,
-          groupId: team.id,
-          traits: {
-            name: team.name
-          }
-        });
-      }
 
       return team;
     },

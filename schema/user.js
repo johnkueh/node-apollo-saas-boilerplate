@@ -9,7 +9,7 @@ export default gql`
   extend type Mutation {
     signup(firstName: String!, lastName: String!, email: String!, password: String!): AuthPayload!
       @analyticsIdentify
-    login(email: String!, password: String!): AuthPayload!
+    login(email: String!, password: String!): AuthPayload! @analyticsIdentify
     forgotPassword(email: String!): Result
     resetPassword(password: String!, token: String!): Result
     updateUser(firstName: String, lastName: String, email: String, password: String): User!

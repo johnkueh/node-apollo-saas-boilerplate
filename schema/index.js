@@ -8,6 +8,7 @@ const linkSchema = gql`
 
   directive @requireAuth on FIELD_DEFINITION
   directive @analyticsIdentify on FIELD_DEFINITION
+  directive @analyticsTrack(event: String) on FIELD_DEFINITION
   directive @computed(value: String) on FIELD_DEFINITION
 
   type Query {
