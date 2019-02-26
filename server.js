@@ -8,8 +8,7 @@ import schema from './schema';
 import resolvers from './resolvers';
 import RequireAuthDirective from './directives/requireAuthDirective';
 import ComputedDirective from './directives/computedDirective';
-import AnalyticsIdentifyDirective from './directives/analyticsIdentifyDirective';
-import AnalyticsTrackDirective from './directives/analyticsTrackDirective';
+import AnalyticsDirective from './directives/analyticsDirective';
 import models, { sequelize } from './db/models';
 import { handleWebhook } from './services/stripe';
 
@@ -30,8 +29,8 @@ const server = new ApolloServer({
   schemaDirectives: {
     requireAuth: RequireAuthDirective,
     computed: ComputedDirective,
-    analyticsIdentify: AnalyticsIdentifyDirective,
-    analyticsTrack: AnalyticsTrackDirective
+    analytics: AnalyticsDirective,
+    analytics_group: AnalyticsDirective
   },
   formatError: error => {
     // remove the internal sequelize error message

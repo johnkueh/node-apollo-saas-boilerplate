@@ -1,3 +1,5 @@
+import { analytics } from '../services/segment';
+
 export default {
   Mutation: {
     async createTeam(parent, { name }, { user, models }, info) {
