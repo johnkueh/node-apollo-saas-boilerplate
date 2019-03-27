@@ -18,13 +18,13 @@ const user = {
   teamId: 1
 };
 
-test('analytics returns a Segment analytics object', () => {
+it('analytics returns a Segment analytics object', () => {
   expect(analytics).toHaveProperty('identify');
   expect(analytics).toHaveProperty('group');
   expect(analytics).toHaveProperty('track');
 });
 
-test('identify calls segment.identify with correct arguments', () => {
+it('identify calls segment.identify with correct arguments', () => {
   const mockSegmentAnalytics = {
     identify: jest.fn()
   };
