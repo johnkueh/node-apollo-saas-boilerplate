@@ -52,7 +52,26 @@ it('subscribes customer to a plan', async () => {
   });
 });
 
-it.todo('lists all invoices for a customer');
+it('lists all invoices for a customer', async () => {
+  const resp = await listAllInvoices({
+    customerId: 'cust_234'
+  });
+  expect(Stripe.mocks.invoices.list).toHaveBeenCalledWith({
+    customer: 'cust_234'
+  });
+  expect(resp).toEqual([
+    {
+      amount_due: 20,
+      amount_paid: 20,
+      invoice_pdf: 'https://stripe.com/invoice',
+      status: 'paid',
+      date: new Date(2018, 8, 8),
+      period_start: new Date(2018, 8, 8),
+      period_end: new Date(2018, 9, 8)
+    }
+  ]);
+});
+
 it.todo('runs callback on customer subscription deleted webhook');
 it.todo('runs callback on customer subscription created webhook');
 it.todo('runs callback on customer subscription updated webhook');

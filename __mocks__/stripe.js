@@ -15,6 +15,21 @@ Stripe.mocks = {
       planId: 'annual_premium',
       customerId: 'cust_234'
     })
+  },
+  invoices: {
+    list: jest.fn().mockResolvedValue({
+      data: [
+        {
+          amount_due: 20,
+          amount_paid: 20,
+          invoice_pdf: 'https://stripe.com/invoice',
+          status: 'paid',
+          date: new Date(2018, 8, 8),
+          period_start: new Date(2018, 8, 8),
+          period_end: new Date(2018, 9, 8)
+        }
+      ]
+    })
   }
 };
 
