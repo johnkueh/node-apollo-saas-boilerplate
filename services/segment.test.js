@@ -1,8 +1,6 @@
 import Analytics from 'analytics-node';
 import { identify, analytics } from './segment';
 
-jest.mock('analytics-node');
-
 beforeEach(() => {
   process.env.SEGMENT_WRITE_KEY = 'MOCK-KEY';
 });
@@ -25,15 +23,10 @@ it('analytics returns a Segment analytics object', () => {
 });
 
 it('identify calls segment.identify with correct arguments', () => {
-  const mockSegmentAnalytics = {
-    identify: jest.fn()
-  };
-
-  Analytics.mockImplementation(() => mockSegmentAnalytics);
   expect(Analytics).not.toHaveBeenCalled();
   identify(user);
   expect(Analytics).toHaveBeenCalled();
-  expect(mockSegmentAnalytics.identify).toHaveBeenCalledWith({
+  expect(Analytics.mocks.identify).toHaveBeenCalledWith({
     userId: user.id,
     traits: {
       firstName: user.firstName,

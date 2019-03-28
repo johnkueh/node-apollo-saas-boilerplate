@@ -1,3 +1,4 @@
+import Stripe from 'stripe';
 import {
   createCustomer,
   createCard,
@@ -5,24 +6,6 @@ import {
   listAllInvoices,
   handleWebhook
 } from './stripe';
-
-const stripe = require('stripe');
-
-jest.mock('stripe');
-
-const mockStripe = {
-  customers: {
-    create: jest.fn().mockResolvedValue({
-      id: 'cust_234'
-    }),
-    update: jest.fn().mockResolvedValue({
-      token: 'tok_234',
-      customerId: 'cust_234'
-    })
-  }
-};
-
-stripe.mockImplementation(() => mockStripe);
 
 beforeEach(() => {
   process.env.STRIPE_SECRET_KEY = 'MOCK-KEY';
@@ -33,7 +16,7 @@ it('creates customer and returns a customer id', async () => {
     name: 'John',
     email: 'john@doe.com'
   });
-  expect(mockStripe.customers.create).toHaveBeenCalledWith({
+  expect(Stripe.mocks.customers.create).toHaveBeenCalledWith({
     name: 'John',
     email: 'john@doe.com'
   });
@@ -45,7 +28,7 @@ it('updates customer with token', async () => {
     token: 'cust_token',
     customerId: 'cust_234'
   });
-  expect(mockStripe.customers.update).toHaveBeenCalledWith('cust_234', {
+  expect(Stripe.mocks.customers.update).toHaveBeenCalledWith('cust_234', {
     source: 'cust_token'
   });
   expect(resp).toEqual({
@@ -54,7 +37,21 @@ it('updates customer with token', async () => {
   });
 });
 
-it.todo('subscribes customer to a plan');
+it('subscribes customer to a plan', async () => {
+  const resp = await createSubscription({
+    customerId: 'cust_234',
+    planId: 'annual_premium'
+  });
+  expect(Stripe.mocks.subscriptions.create).toHaveBeenCalledWith({
+    customer: 'cust_234',
+    items: [{ plan: 'annual_premium' }]
+  });
+  expect(resp).toEqual({
+    planId: 'annual_premium',
+    customerId: 'cust_234'
+  });
+});
+
 it.todo('lists all invoices for a customer');
 it.todo('runs callback on customer subscription deleted webhook');
 it.todo('runs callback on customer subscription created webhook');
