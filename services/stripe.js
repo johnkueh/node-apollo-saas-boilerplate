@@ -49,8 +49,6 @@ export const handleWebhook = ({ req, res, handleSubscriptionUpdated }) => {
     periodEnd
   };
 
-  console.log('webhook type - ', json.type);
-
   switch (json.type) {
     case 'customer.subscription.deleted':
       handleSubscriptionUpdated(period);
@@ -62,7 +60,6 @@ export const handleWebhook = ({ req, res, handleSubscriptionUpdated }) => {
       handleSubscriptionUpdated(period);
       break;
     default:
-    // console.log(json.data.object);
   }
 
   res.sendStatus(200);

@@ -72,6 +72,82 @@ it('lists all invoices for a customer', async () => {
   ]);
 });
 
-it.todo('runs callback on customer subscription deleted webhook');
-it.todo('runs callback on customer subscription created webhook');
-it.todo('runs callback on customer subscription updated webhook');
+const mockData = {
+  object: {
+    customer: 'cust_123',
+    current_period_end: '08/09/18',
+    current_period_start: '08/08/18'
+  }
+};
+
+const mockRes = {
+  sendStatus: jest.fn()
+};
+
+const mockHandleUpdated = jest.fn();
+
+it('runs callback on customer subscription deleted webhook', () => {
+  const mockReq = {
+    body: JSON.stringify({
+      type: 'customer.subscription.deleted',
+      data: mockData
+    })
+  };
+
+  handleWebhook({
+    req: mockReq,
+    res: mockRes,
+    handleSubscriptionUpdated: mockHandleUpdated
+  });
+
+  expect(mockRes.sendStatus).toHaveBeenCalledWith(200);
+  expect(mockHandleUpdated).toHaveBeenCalledWith({
+    customerId: mockData.object.customer,
+    periodStart: mockData.object.current_period_start,
+    periodEnd: mockData.object.current_period_end
+  });
+});
+
+it('runs callback on customer subscription created webhook', () => {
+  const mockReq = {
+    body: JSON.stringify({
+      type: 'customer.subscription.created',
+      data: mockData
+    })
+  };
+
+  handleWebhook({
+    req: mockReq,
+    res: mockRes,
+    handleSubscriptionUpdated: mockHandleUpdated
+  });
+
+  expect(mockRes.sendStatus).toHaveBeenCalledWith(200);
+  expect(mockHandleUpdated).toHaveBeenCalledWith({
+    customerId: mockData.object.customer,
+    periodStart: mockData.object.current_period_start,
+    periodEnd: mockData.object.current_period_end
+  });
+});
+
+it('runs callback on customer subscription updated webhook', () => {
+  const mockReq = {
+    body: JSON.stringify({
+      type: 'customer.subscription.updated',
+      data: mockData
+    })
+  };
+
+  handleWebhook({
+    req: mockReq,
+    res: mockRes,
+    handleSubscriptionUpdated: mockHandleUpdated
+  });
+
+  expect(mockRes.sendStatus).toHaveBeenCalledWith(200);
+  expect(mockHandleUpdated).toHaveBeenCalledWith({
+    customerId: mockData.object.customer,
+    periodStart: mockData.object.current_period_start,
+    periodEnd: mockData.object.current_period_end
+  });
+});
