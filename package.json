@@ -6,7 +6,8 @@
   "scripts": {
     "tunnel": "ssh -R zapcms.serveo.net:80:localhost:8000 serveo.net",
     "console": "nodemon --exec babel-node console.js",
-    "start": "nodemon --exec babel-node server.js"
+    "start": "nodemon --exec babel-node server.js",
+    "test": "jest"
   },
   "author": "John Kueh",
   "license": "MIT",
@@ -25,6 +26,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "jest": "^24.5.0",
     "nodemon": "^1.18.10",
     "prettier": "^1.16.4"
   },

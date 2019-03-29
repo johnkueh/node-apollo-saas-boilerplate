@@ -1,14 +1,16 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+import Stripe from 'stripe';
+
+const stripe = () => new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const createCustomer = async args => {
-  const customer = await stripe.customers.create(args);
+  const customer = await stripe().customers.create(args);
   return customer.id;
 };
 
 export const createCard = async ({ token, customerId }) => {
   // To make test token: https://jsfiddle.net/9dxwaq5m/
   // Eg: tok_1E7LJ4ICatY1a4Wj8qKPv2u3
-  return stripe.customers.update(customerId, {
+  return stripe().customers.update(customerId, {
     source: token
   });
 };
@@ -16,7 +18,7 @@ export const createCard = async ({ token, customerId }) => {
 export const createSubscription = async ({ customerId, planId }) => {
   // Get test planId from https://dashboard.stripe.com/test/subscriptions/products
   // Eg: plan_EaVtYitQ31qTPk
-  return stripe.subscriptions.create({
+  return stripe().subscriptions.create({
     customer: customerId,
     items: [
       {
@@ -27,7 +29,7 @@ export const createSubscription = async ({ customerId, planId }) => {
 };
 
 export const listAllInvoices = async ({ customerId }) => {
-  const res = await stripe.invoices.list({
+  const res = await stripe().invoices.list({
     customer: customerId
   });
   return res.data;
@@ -47,8 +49,6 @@ export const handleWebhook = ({ req, res, handleSubscriptionUpdated }) => {
     periodEnd
   };
 
-  console.log('webhook type - ', json.type);
-
   switch (json.type) {
     case 'customer.subscription.deleted':
       handleSubscriptionUpdated(period);
@@ -60,7 +60,6 @@ export const handleWebhook = ({ req, res, handleSubscriptionUpdated }) => {
       handleSubscriptionUpdated(period);
       break;
     default:
-    // console.log(json.data.object);
   }
 
   res.sendStatus(200);

@@ -1,11 +1,19 @@
 import Analytics from 'analytics-node';
 
-const segAnalytics = new Analytics(process.env.SEGMENT_WRITE_KEY);
+export const analytics = new Analytics(process.env.SEGMENT_WRITE_KEY);
 
-export const identify = user => {
-  const { id, firstName, lastName, email, stripeCustomerId, createdAt, updatedAt, teamId } = user;
-
-  return segAnalytics.identify({
+export const identify = ({
+  id,
+  firstName,
+  lastName,
+  email,
+  stripeCustomerId,
+  createdAt,
+  updatedAt,
+  teamId
+}) => {
+  const segmentAnalytics = new Analytics(process.env.SEGMENT_WRITE_KEY);
+  return segmentAnalytics.identify({
     userId: id,
     traits: {
       firstName,
@@ -18,5 +26,3 @@ export const identify = user => {
     }
   });
 };
-
-export const analytics = segAnalytics;
