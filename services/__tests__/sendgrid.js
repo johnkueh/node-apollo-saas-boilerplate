@@ -1,5 +1,5 @@
 import sgMail from '@sendgrid/mail';
-import msg from './sendgrid';
+import msg from '../sendgrid';
 
 beforeEach(() => {
   process.env.SENDGRID_API_KEY = 'MOCK-KEY';
