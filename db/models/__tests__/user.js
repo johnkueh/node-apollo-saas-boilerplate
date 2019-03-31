@@ -1,8 +1,10 @@
 import User from '../user';
-import '../../../lib/sequelize-matchers';
+import { itShouldValidate, itShouldAssociate } from '../../../lib/sequelize-helpers';
 
 describe('User', () => {
-  it('belongs to team', () => {
-    expect(User).toBelongTo('team');
-  });
+  itShouldAssociate(User, 'team').with('belongsTo');
+  itShouldValidate(User, 'firstName').with({ notNull: true, notEmpty: true });
+  itShouldValidate(User, 'lastName').with({ notNull: true, notEmpty: true });
+  itShouldValidate(User, 'email').with({ isEmail: true, notNull: true, notEmpty: true });
+  itShouldValidate(User, 'password').with({ len: [6], notNull: true, notEmpty: true });
 });

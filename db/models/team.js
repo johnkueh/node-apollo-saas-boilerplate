@@ -4,7 +4,13 @@ module.exports = (sequelize, DataTypes) => {
   const Team = sequelize.define(
     'team',
     {
-      name: DataTypes.STRING
+      name: {
+        type: DataTypes.STRING,
+        validate: {
+          notNull: true,
+          notEmpty: true
+        }
+      }
     },
     {}
   );

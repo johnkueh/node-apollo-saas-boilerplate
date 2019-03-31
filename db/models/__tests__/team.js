@@ -1,8 +1,7 @@
 import Team from '../team';
-import '../../../lib/sequelize-matchers';
+import { itShouldValidate, itShouldAssociate } from '../../../lib/sequelize-helpers';
 
 describe('Team', () => {
-  it('have many users', () => {
-    expect(Team).toHaveMany('user');
-  });
+  itShouldAssociate(Team, 'user').with('hasMany');
+  itShouldValidate(Team, 'name').with({ notNull: true, notEmpty: true });
 });

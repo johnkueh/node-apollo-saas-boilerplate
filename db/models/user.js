@@ -3,10 +3,36 @@ const uuidv4 = require('uuid/v4');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
+    firstName: {
+      type: DataTypes.STRING,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        notNull: true,
+        isEmail: true,
+        notEmpty: true
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate: {
+        notNull: true,
+        len: [6],
+        notEmpty: true
+      }
+    },
     resetPasswordToken: DataTypes.STRING,
     stripeCustomerId: DataTypes.STRING,
     createdAt: DataTypes.DATE,
