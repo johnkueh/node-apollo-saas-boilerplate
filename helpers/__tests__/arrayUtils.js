@@ -1,4 +1,4 @@
-import { toCamelCase } from './arrayUtils';
+import { toCamelCase } from '../arrayUtils';
 
 test('toCamelCase transforms keys of every object in array to camelCase', () => {
   const arr = [

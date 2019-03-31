@@ -1,5 +1,5 @@
 import Analytics from 'analytics-node';
-import { identify, analytics } from './segment';
+import { identify, analytics } from '../segment';
 
 beforeEach(() => {
   process.env.SEGMENT_WRITE_KEY = 'MOCK-KEY';

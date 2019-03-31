@@ -5,7 +5,7 @@ import {
   createSubscription,
   listAllInvoices,
   handleWebhook
-} from './stripe';
+} from '../stripe';
 
 beforeEach(() => {
   process.env.STRIPE_SECRET_KEY = 'MOCK-KEY';
