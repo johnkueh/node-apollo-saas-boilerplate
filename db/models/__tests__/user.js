@@ -1,5 +1,5 @@
+import { itShouldValidate, itShouldAssociate } from 'lib/sequelize-helpers';
 import User from '../user';
-import { itShouldValidate, itShouldAssociate } from '../../../lib/sequelize-helpers';
 
 describe('User', () => {
   itShouldAssociate(User, 'team').with('belongsTo');
