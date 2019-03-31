@@ -1,4 +1,4 @@
-import { itShouldValidate, itShouldAssociate } from 'lib/sequelize-helpers';
+import { itShouldValidate, itShouldAssociate } from 'lib/sequelize-matchers';
 import User from '../user';
 
 describe('User', () => {
