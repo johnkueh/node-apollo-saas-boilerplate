@@ -40,27 +40,7 @@ describe('User schema', () => {
 
     const variables = {};
 
-    const expected = {
-      data: {
-        me: {
-          id: mocks.String(),
-          firstName: mocks.String(),
-          lastName: mocks.String(),
-          fullName: mocks.String(),
-          email: mocks.String(),
-          createdAt: mocks.DateTime(),
-          updatedAt: mocks.DateTime(),
-          periodStart: mocks.DateTime(),
-          periodEnd: mocks.DateTime(),
-          team: {
-            id: mocks.String(),
-            name: mocks.String()
-          }
-        }
-      }
-    };
-
-    expect(server.query(payload, variables)).resolves.toEqual(expected);
+    expect(server.query(payload, variables)).resolves.toMatchSnapshot();
   });
 
   it(`query { paymentHistory } should return expected value`, () => {
@@ -80,43 +60,8 @@ describe('User schema', () => {
 
     const variables = {};
 
-    const expected = {
-      data: {
-        paymentHistory: [
-          {
-            amountDue: 1,
-            amountPaid: 1,
-            invoicePdf: mocks.String(),
-            status: mocks.String(),
-            date: mocks.DateTime(),
-            periodStart: mocks.DateTime(),
-            periodEnd: mocks.DateTime()
-          },
-          {
-            amountDue: 1,
-            amountPaid: 1,
-            invoicePdf: mocks.String(),
-            status: mocks.String(),
-            date: mocks.DateTime(),
-            periodStart: mocks.DateTime(),
-            periodEnd: mocks.DateTime()
-          }
-        ]
-      }
-    };
-
-    expect(server.query(payload, variables)).resolves.toEqual(expected);
+    expect(server.query(payload, variables)).resolves.toMatchSnapshot();
   });
-
-  const expectedAuthData = {
-    jwt: mocks.String(),
-    user: {
-      id: mocks.String(),
-      firstName: mocks.String(),
-      lastName: mocks.String(),
-      email: mocks.String()
-    }
-  };
 
   it(`mutation { signUp } should return expected value`, () => {
     const payload = `
@@ -140,11 +85,7 @@ describe('User schema', () => {
       password: 'test123'
     };
 
-    expect(server.query(payload, variables)).resolves.toEqual({
-      data: {
-        signup: expectedAuthData
-      }
-    });
+    expect(server.query(payload, variables)).resolves.toMatchSnapshot();
   });
 
   it(`mutation { login } should return expected value`, () => {
@@ -167,11 +108,7 @@ describe('User schema', () => {
       password: 'test123'
     };
 
-    expect(server.query(payload, variables)).resolves.toEqual({
-      data: {
-        login: expectedAuthData
-      }
-    });
+    expect(server.query(payload, variables)).resolves.toMatchSnapshot();
   });
 
   it(`mutation { forgotPassword } should return expected value`, () => {
@@ -187,15 +124,7 @@ describe('User schema', () => {
       email: 'john@beaconmaker.com'
     };
 
-    const expected = {
-      data: {
-        forgotPassword: {
-          message: mocks.String()
-        }
-      }
-    };
-
-    expect(server.query(payload, variables)).resolves.toEqual(expected);
+    expect(server.query(payload, variables)).resolves.toMatchSnapshot();
   });
 
   it(`mutation { updateUser } should return expected value`, () => {
@@ -217,18 +146,7 @@ describe('User schema', () => {
       password: 'test123'
     };
 
-    const expected = {
-      data: {
-        updateUser: {
-          id: mocks.String(),
-          firstName: mocks.String(),
-          lastName: mocks.String(),
-          email: mocks.String()
-        }
-      }
-    };
-
-    expect(server.query(payload, variables)).resolves.toEqual(expected);
+    expect(server.query(payload, variables)).resolves.toMatchSnapshot();
   });
 
   it(`mutation { deleteUser } should return expected value`, () => {
@@ -242,13 +160,7 @@ describe('User schema', () => {
       id: 1
     };
 
-    const expected = {
-      data: {
-        deleteUser: 1
-      }
-    };
-
-    expect(server.query(payload, variables)).resolves.toEqual(expected);
+    expect(server.query(payload, variables)).resolves.toMatchSnapshot();
   });
 
   it(`mutation { addCreditCard } should return expected value`, () => {
@@ -264,15 +176,7 @@ describe('User schema', () => {
       token: 'tok_1234'
     };
 
-    const expected = {
-      data: {
-        addCreditCard: {
-          message: mocks.String()
-        }
-      }
-    };
-
-    expect(server.query(payload, variables)).resolves.toEqual(expected);
+    expect(server.query(payload, variables)).resolves.toMatchSnapshot();
   });
 
   it(`mutation { subscribePlan } should return expected value`, () => {
@@ -288,14 +192,6 @@ describe('User schema', () => {
       planId: 'plan_123'
     };
 
-    const expected = {
-      data: {
-        subscribePlan: {
-          message: mocks.String()
-        }
-      }
-    };
-
-    expect(server.query(payload, variables)).resolves.toEqual(expected);
+    expect(server.query(payload, variables)).resolves.toMatchSnapshot();
   });
 });
