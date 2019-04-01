@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Team schema mutation { createTeam } should return expected value 1`] = `
+Object {
+  "data": Object {
+    "createTeam": Object {
+      "id": "String",
+      "name": "String",
+    },
+  },
+}
+`;
+
+exports[`Team schema mutation { updateTeam } should return expected value 1`] = `
+Object {
+  "data": Object {
+    "updateTeam": Object {
+      "id": "String",
+      "name": "String",
+    },
+  },
+}
+`;

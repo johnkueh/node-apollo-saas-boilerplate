@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User schema mutation { addCreditCard } should return expected value 1`] = `
+Object {
+  "data": Object {
+    "addCreditCard": Object {
+      "message": "String",
+    },
+  },
+}
+`;
+
+exports[`User schema mutation { deleteUser } should return expected value 1`] = `
+Object {
+  "data": Object {
+    "deleteUser": 1,
+  },
+}
+`;
+
+exports[`User schema mutation { forgotPassword } should return expected value 1`] = `
+Object {
+  "data": Object {
+    "forgotPassword": Object {
+      "message": "String",
+    },
+  },
+}
+`;
+
+exports[`User schema mutation { login } should return expected value 1`] = `
+Object {
+  "data": Object {
+    "login": Object {
+      "jwt": "String",
+      "user": Object {
+        "email": "String",
+        "firstName": "String",
+        "id": "String",
+        "lastName": "String",
+      },
+    },
+  },
+}
+`;
+
+exports[`User schema mutation { signUp } should return expected value 1`] = `
+Object {
+  "data": Object {
+    "signup": Object {
+      "jwt": "String",
+      "user": Object {
+        "email": "String",
+        "firstName": "String",
+        "id": "String",
+        "lastName": "String",
+      },
+    },
+  },
+}
+`;
+
+exports[`User schema mutation { subscribePlan } should return expected value 1`] = `
+Object {
+  "data": Object {
+    "subscribePlan": Object {
+      "message": "String",
+    },
+  },
+}
+`;
+
+exports[`User schema mutation { updateUser } should return expected value 1`] = `
+Object {
+  "data": Object {
+    "updateUser": Object {
+      "email": "String",
+      "firstName": "String",
+      "id": "String",
+      "lastName": "String",
+    },
+  },
+}
+`;
+
+exports[`User schema query { me } should return expected value 1`] = `
+Object {
+  "data": Object {
+    "me": Object {
+      "createdAt": 2018-09-07T14:00:00.000Z,
+      "email": "String",
+      "firstName": "String",
+      "fullName": "String",
+      "id": "String",
+      "lastName": "String",
+      "periodEnd": 2018-09-07T14:00:00.000Z,
+      "periodStart": 2018-09-07T14:00:00.000Z,
+      "team": Object {
+        "id": "String",
+        "name": "String",
+      },
+      "updatedAt": 2018-09-07T14:00:00.000Z,
+    },
+  },
+}
+`;
+
+exports[`User schema query { paymentHistory } should return expected value 1`] = `
+Object {
+  "data": Object {
+    "paymentHistory": Array [
+      Object {
+        "amountDue": 1,
+        "amountPaid": 1,
+        "date": 2018-09-07T14:00:00.000Z,
+        "invoicePdf": "String",
+        "periodEnd": 2018-09-07T14:00:00.000Z,
+        "periodStart": 2018-09-07T14:00:00.000Z,
+        "status": "String",
+      },
+      Object {
+        "amountDue": 1,
+        "amountPaid": 1,
+        "date": 2018-09-07T14:00:00.000Z,
+        "invoicePdf": "String",
+        "periodEnd": 2018-09-07T14:00:00.000Z,
+        "periodStart": 2018-09-07T14:00:00.000Z,
+        "status": "String",
+      },
+    ],
+  },
+}
+`;

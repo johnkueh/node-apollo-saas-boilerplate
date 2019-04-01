@@ -31,16 +31,7 @@ describe('Team schema', () => {
       name: 'Awesome team'
     };
 
-    const expected = {
-      data: {
-        createTeam: {
-          id: mocks.String(),
-          name: mocks.String()
-        }
-      }
-    };
-
-    expect(server.query(payload, variables)).resolves.toEqual(expected);
+    expect(server.query(payload, variables)).resolves.toMatchSnapshot();
   });
 
   it(`mutation { updateTeam } should return expected value`, () => {
@@ -57,15 +48,6 @@ describe('Team schema', () => {
       name: 'Awesome team 2'
     };
 
-    const expected = {
-      data: {
-        updateTeam: {
-          id: mocks.String(),
-          name: mocks.String()
-        }
-      }
-    };
-
-    expect(server.query(payload, variables)).resolves.toEqual(expected);
+    expect(server.query(payload, variables)).resolves.toMatchSnapshot();
   });
 });
